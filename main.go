@@ -5,6 +5,7 @@ import (
 	"os"
 	"log"
 	"net/http"
+	dotenv "github.com/joho/godotenv"
 )
 
 type Page struct {
@@ -40,11 +41,14 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	dotenv.Load()
+	dbName := os.Getenv("DATABASE_NAME")
+	fmt.Println(dbName)
 	// p1 := &Page {Title: "TestPage", Body: []byte("this is a sample.")}
 	// p1.save()
 	// p2, _ := loadPage("TestPage")
 	// fmt.Println(string(p2.Body))
-	http.HandleFunc("/view/", viewHandler)
+	// http.HandleFunc("/view/", viewHandler)
 	http.HandleFunc("/", handler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
